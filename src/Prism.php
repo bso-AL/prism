@@ -7,6 +7,7 @@ namespace Prism\Prism;
 use Prism\Prism\Audio\AudioResponse;
 use Prism\Prism\Audio\PendingRequest as PendingAudioRequest;
 use Prism\Prism\Audio\TextResponse as AudioTextResponse;
+use Prism\Prism\Batch\PendingRequest as PendingBatchRequest;
 use Prism\Prism\Embeddings\PendingRequest as PendingEmbeddingRequest;
 use Prism\Prism\Embeddings\Response as EmbeddingResponse;
 use Prism\Prism\Enums\Provider as ProviderEnum;
@@ -68,6 +69,11 @@ class Prism
     public static function audio(): PendingAudioRequest
     {
         return new PendingAudioRequest;
+    }
+
+    public static function batch(): PendingBatchRequest
+    {
+        return new PendingBatchRequest;
     }
 
     /**
