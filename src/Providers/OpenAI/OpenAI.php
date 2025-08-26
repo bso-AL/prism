@@ -11,6 +11,9 @@ use Prism\Prism\Audio\AudioResponse as TextToSpeechResponse;
 use Prism\Prism\Audio\SpeechToTextRequest;
 use Prism\Prism\Audio\TextResponse as SpeechToTextResponse;
 use Prism\Prism\Audio\TextToSpeechRequest;
+use Prism\Prism\Batch\ListResponse as ListBatchResponse;
+use Prism\Prism\Batch\Request as BatchRequest;
+use Prism\Prism\Batch\Response as BatchResponse;
 use Prism\Prism\Concerns\InitializesClient;
 use Prism\Prism\Embeddings\Request as EmbeddingsRequest;
 use Prism\Prism\Embeddings\Response as EmbeddingsResponse;
@@ -19,11 +22,17 @@ use Prism\Prism\Exceptions\PrismException;
 use Prism\Prism\Exceptions\PrismProviderOverloadedException;
 use Prism\Prism\Exceptions\PrismRateLimitedException;
 use Prism\Prism\Exceptions\PrismRequestTooLargeException;
+use Prism\Prism\File\DeleteResponse as FileDeleteResponse;
+use Prism\Prism\File\ListResponse as FileListResponse;
+use Prism\Prism\File\Request as FileRequest;
+use Prism\Prism\File\Response as FileResponse;
 use Prism\Prism\Images\Request as ImagesRequest;
 use Prism\Prism\Images\Response as ImagesResponse;
 use Prism\Prism\Providers\OpenAI\Concerns\ProcessRateLimits;
 use Prism\Prism\Providers\OpenAI\Handlers\Audio;
+use Prism\Prism\Providers\OpenAI\Handlers\Batch;
 use Prism\Prism\Providers\OpenAI\Handlers\Embeddings;
+use Prism\Prism\Providers\OpenAI\Handlers\File;
 use Prism\Prism\Providers\OpenAI\Handlers\Images;
 use Prism\Prism\Providers\OpenAI\Handlers\Stream;
 use Prism\Prism\Providers\OpenAI\Handlers\Structured;
@@ -121,6 +130,93 @@ class OpenAI extends Provider
         ));
 
         return $handler->handle($request);
+    }
+
+    public function downloadFile(FileRequest $request): string
+    {
+        $handler = new File($this->client(
+            $request->clientOptions(),
+            $request->clientRetry()
+        ));
+
+        return $handler->downloadFile($request);
+    }
+
+    public function uploadFile(FileRequest $request): FileResponse
+    {
+        $handler = new File($this->client(
+            $request->clientOptions(),
+            $request->clientRetry()
+        ));
+
+        return $handler->uploadFile($request);
+    }
+
+    public function retrieveFile(FileRequest $request): FileResponse
+    {
+        $handler = new File($this->client(
+            $request->clientOptions(),
+            $request->clientRetry()
+        ));
+
+        return $handler->retrieveFile($request);
+
+    }
+
+    public function listFiles(FileRequest $request): FileListResponse
+    {
+        $handler = new File($this->client(
+            $request->clientOptions(),
+            $request->clientRetry()
+        ));
+
+        return $handler->listFiles();
+    }
+
+    public function deleteFile(FileRequest $request): FileDeleteResponse
+    {
+        $handler = new File($this->client(
+            $request->clientOptions(),
+            $request->clientRetry()
+        ));
+
+        return $handler->deleteFile($request);
+    }
+
+    public function processBatch(BatchRequest $request): BatchResponse
+    {
+        $handler = new Batch(
+            $this->client($request->clientOptions(), $request->clientRetry())
+        );
+
+        return $handler->processBatch($request);
+    }
+
+    public function retrieveBatch(BatchRequest $request): BatchResponse
+    {
+        $handler = new Batch(
+            $this->client($request->clientOptions(), $request->clientRetry())
+        );
+
+        return $handler->retrieveBatch($request);
+    }
+
+    public function cancelBatch(BatchRequest $request): BatchResponse
+    {
+        $handler = new Batch(
+            $this->client($request->clientOptions(), $request->clientRetry())
+        );
+
+        return $handler->cancelBatch($request);
+    }
+
+    public function listBatches(BatchRequest $request): ListBatchResponse
+    {
+        $handler = new Batch(
+            $this->client($request->clientOptions(), $request->clientRetry())
+        );
+
+        return $handler->listBatches();
     }
 
     public function handleRequestException(string $model, RequestException $e): never
