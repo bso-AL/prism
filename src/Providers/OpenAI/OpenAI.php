@@ -23,6 +23,7 @@ use Prism\Prism\Images\Request as ImagesRequest;
 use Prism\Prism\Images\Response as ImagesResponse;
 use Prism\Prism\Providers\OpenAI\Concerns\ProcessRateLimits;
 use Prism\Prism\Providers\OpenAI\Handlers\Audio;
+use Prism\Prism\Providers\OpenAI\Handlers\Batch;
 use Prism\Prism\Providers\OpenAI\Handlers\Embeddings;
 use Prism\Prism\Providers\OpenAI\Handlers\File;
 use Prism\Prism\Providers\OpenAI\Handlers\Images;
@@ -127,6 +128,11 @@ class OpenAI extends Provider
     public function file(): File
     {
         return new File($this->client());
+    }
+
+    public function batch(): Batch
+    {
+        return new Batch($this->client());
     }
 
     public function handleRequestException(string $model, RequestException $e): never
