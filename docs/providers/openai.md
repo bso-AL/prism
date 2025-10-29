@@ -82,6 +82,21 @@ $response = Prism::structured()
     ]) // [!code focus]
 ```
 
+### Service Tiers
+
+Prism supports OpenAI's [Service Tier Configuration](https://platform.openai.com/docs/api-reference/chat/create#chat-create-service_tier) via provider-specific meta.
+
+```php
+$response = Prism::text()
+    ->withProviderOptions([ // [!code focus]
+        'service_tier' => 'priority' // [!code focus]
+    ]) // [!code focus]
+```
+
+> [!WARNING]
+> **Priority Service Tiers increase Cost**: Using priority service tier may reduce response time but increases token costs.
+>
+> 
 ### Reasoning Models
 
 OpenAI's reasoning models like `gpt-5`, `gpt-5-mini`, and `gpt-5-nano` use advanced reasoning capabilities to think through complex problems before responding. These models excel at multi-step problem solving, coding, scientific reasoning, and complex analysis tasks.
@@ -177,7 +192,7 @@ OpenAI offers built-in provider tools that can be used alongside your custom too
 The OpenAI code interpreter allows your AI to execute Python code in a secure, sandboxed environment. This is particularly useful for mathematical calculations, data analysis, and code execution tasks.
 
 ```php
-use Prism\Prism\Prism;
+use Prism\Prism\Facades\Prism;
 use Prism\Prism\ValueObjects\ProviderTool;
 
 Prism::text()
@@ -382,7 +397,7 @@ Convert text into natural-sounding speech with various voice options:
 #### Basic TTS Usage
 
 ```php
-use Prism\Prism\Prism;
+use Prism\Prism\Facades\Prism;
 
 $response = Prism::audio()
     ->using('openai', 'gpt-4o-mini-tts')

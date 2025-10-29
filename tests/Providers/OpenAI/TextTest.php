@@ -9,8 +9,8 @@ use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Http;
 use Prism\Prism\Enums\Citations\CitationSourceType;
 use Prism\Prism\Enums\Provider;
+use Prism\Prism\Facades\Prism;
 use Prism\Prism\Facades\Tool;
-use Prism\Prism\Prism;
 use Prism\Prism\ValueObjects\Media\Document;
 use Prism\Prism\ValueObjects\MessagePartWithCitations;
 use Prism\Prism\ValueObjects\Messages\UserMessage;
@@ -381,6 +381,54 @@ it('uses meta to set auto truncation', function (): void {
         $body = json_decode($request->body(), true);
 
         expect(data_get($body, 'truncation'))->toBe('auto');
+
+        return true;
+    });
+});
+
+it('uses meta to set service_tier', function (): void {
+    FixtureResponse::fakeResponseSequence(
+        'v1/responses',
+        'openai/generate-text-with-a-prompt'
+    );
+
+    $serviceTier = 'priority';
+
+    Prism::text()
+        ->using(Provider::OpenAI, 'gpt-4o')
+        ->withPrompt('What have we talked about?')
+        ->withProviderOptions([
+            'service_tier' => $serviceTier,
+        ])
+        ->asText();
+
+    Http::assertSent(function (Request $request) use ($serviceTier): true {
+        $body = json_decode($request->body(), true);
+
+        expect(data_get($body, 'service_tier'))->toBe($serviceTier);
+
+        return true;
+    });
+});
+
+it('filters service_tier if null', function (): void {
+    FixtureResponse::fakeResponseSequence(
+        'v1/responses',
+        'openai/generate-text-with-a-prompt'
+    );
+
+    Prism::text()
+        ->using(Provider::OpenAI, 'gpt-4o')
+        ->withPrompt('What have we talked about?')
+        ->withProviderOptions([
+            'service_tier' => null,
+        ])
+        ->asText();
+
+    Http::assertSent(function (Request $request): true {
+        $body = json_decode($request->body(), true);
+
+        expect($body)->not()->toHaveKey('service_tier');
 
         return true;
     });
