@@ -4,24 +4,26 @@ declare(strict_types=1);
 
 namespace Prism\Prism\Providers\OpenAI\Concerns;
 
-use Prism\Prism\Enums\BatchEndPoints;
+use Prism\Prism\Providers\OpenAI\Enums\BatchEndPointsEnum;
 
 trait ConfiguresBatch
 {
-    private string $fileInputId;
+    private string $fileInputId = '';
 
-    private string $endPoint;
+    private string $endPoint = '';
 
-    private string $completionWindow = '24h';
+    private string $completionWindow = '';
 
-    private string $batchFileId;
+    private string $batchFileId = '';
 
     private function initializeDefaultConfiguresBatchTrait(): void
     {
         $this->completionWindow = config('prism.open_ai_batch.completion_window', '24h');
+        $this->endPoint = BatchEndPointsEnum::ChatCompletions->value;
+
     }
 
-    public function withEndpoint(BatchEndPoints $endPoint): self
+    public function withEndpoint(BatchEndPointsEnum $endPoint): self
     {
         $this->endPoint = $endPoint->value;
 
