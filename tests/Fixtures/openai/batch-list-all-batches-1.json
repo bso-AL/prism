@@ -1,0 +1,83 @@
+{
+  "data": [
+    {
+      "id": "batch_123",
+      "object": "batch",
+      "endpoint": "/v1/chat/completions",
+      "model": "gpt-4o-2024-08-06",
+      "errors": null,
+      "input_file_id": "file-123123",
+      "completion_window": "24h",
+      "status": "completed",
+      "output_file_id": "file-987987",
+      "error_file_id": null,
+      "created_at": 1724925225,
+      "in_progress_at": 1724925225,
+      "expires_at": 1725011625,
+      "finalizing_at": 1724925233,
+      "completed_at": 1724925233,
+      "failed_at": null,
+      "expired_at": null,
+      "cancelling_at": null,
+      "cancelled_at": null,
+      "request_counts": {
+        "total": 2,
+        "completed": 2,
+        "failed": 0
+      },
+      "usage": {
+        "input_tokens": 0,
+        "output_tokens": 0,
+        "total_tokens": 0,
+        "input_tokens_details": {
+          "cached_tokens": 0
+        },
+        "output_tokens_details": {
+          "reasoning_tokens": 0
+        }
+      },
+      "metadata": null
+    },
+    {
+      "id": "batch_M456",
+      "object": "batch",
+      "endpoint": "/v1/chat/completions",
+      "model": "gpt-4o-mini-2024-07-18",
+      "errors": null,
+      "input_file_id": "file-c3434",
+      "completion_window": "24h",
+      "status": "completed",
+      "output_file_id": "file-A123s123",
+      "error_file_id": null,
+      "created_at": 1724863896,
+      "in_progress_at": 1724863901,
+      "expires_at": 1724950296,
+      "finalizing_at": 1724865465,
+      "completed_at": 1724866074,
+      "failed_at": null,
+      "expired_at": null,
+      "cancelling_at": null,
+      "cancelled_at": null,
+      "request_counts": {
+        "total": 10013,
+        "completed": 10013,
+        "failed": 0
+      },
+      "usage": {
+        "input_tokens": 0,
+        "output_tokens": 0,
+        "total_tokens": 0,
+        "input_tokens_details": {
+          "cached_tokens": 0
+        },
+        "output_tokens_details": {
+          "reasoning_tokens": 0
+        }
+      },
+      "metadata": null
+    }
+  ],
+  "first_id": "batch_123",
+  "last_id": "batch_M456",
+  "has_more": false
+}
