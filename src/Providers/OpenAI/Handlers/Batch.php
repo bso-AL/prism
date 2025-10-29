@@ -15,6 +15,7 @@ use Prism\Prism\Providers\OpenAI\Concerns\ConfiguresBatch;
 use Prism\Prism\Providers\OpenAI\Concerns\ConfiguresFile;
 use Prism\Prism\Providers\OpenAI\Concerns\ConfiguresStorage;
 use Prism\Prism\Providers\OpenAI\Concerns\PreparesBatchResponses;
+use Prism\Prism\Providers\OpenAI\Concerns\ValidatesResponse;
 
 class Batch
 {
@@ -25,6 +26,7 @@ class Batch
     use ConfiguresStorage;
     use HasProviderOptions;
     use PreparesBatchResponses;
+    use ValidatesResponse;
 
     public function __construct(protected PendingRequest $client)
     {
@@ -47,7 +49,7 @@ class Batch
         ]);
         $this->validateResponse($response);
         if ($response->status() !== 200) {
-            throw new PrismException('Failed to upload file');
+            throw new PrismException('Failed to upload file for batch');
         }
 
         return $this->prepareBatchResponse($response->json());
